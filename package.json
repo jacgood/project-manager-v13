@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "snyk test",
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +22,8 @@
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.21",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "snyk": "^1.360.0"
   },
   "devDependencies": {
     "eslint": "^7.4.0",
@@ -28,5 +31,6 @@
     "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
-  }
+  },
+  "snyk": true
 }
