@@ -1,8 +1,12 @@
 const express = require('express');
+
 const app = express();
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
+
+const connectDB = require('./db');
+
 require('dotenv').config();
 
 app.use(helmet());
@@ -10,9 +14,12 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({ status: 'wassuppppp' });
-});
+connectDB();
+
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/projects', require('./routes/api/projects'));
+app.use('/api/objectives', require('./routes/api/objectives'));
+app.use('/api/tasks', require('./routes/api/tasks'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
