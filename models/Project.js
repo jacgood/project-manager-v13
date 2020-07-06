@@ -6,16 +6,16 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
-    descriptions: {
+    description: {
       type: String,
     },
     client: {
-      type: { type: Schema.Types.ObjectId, ref: 'user' },
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'user',
     },
     assignedUser: {
-      type: { type: Schema.Types.ObjectId, ref: 'user' },
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'user',
     },
     dateDue: {
       type: Date,
