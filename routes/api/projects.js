@@ -39,6 +39,26 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
     }
+    Project.findOne({ title: req.body.title }).then(projects => {
+      if (projects) {
+        return res.status(500).json({
+          projectSameTitle: 'A project with that title already exists',
+        });
+      }
+      const newProject = new Project({
+        title: req.body.title,
+        description: req.body.description,
+        client: req.body.client,
+        assignedUser: req.body.assignedUser,
+        dateDue: req.body.dateDue,
+      });
+      newProject
+        .save()
+        .then(project => res.json(project))
+        .catch(err => {
+          console.log(err);
+        });
+    });
   },
 );
 
