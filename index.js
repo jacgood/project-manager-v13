@@ -18,8 +18,6 @@ connectDB();
 
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/projects', require('./routes/api/projects'));
-app.use('/api/objectives', require('./routes/api/objectives'));
-app.use('/api/tasks', require('./routes/api/tasks'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

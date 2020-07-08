@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
-const Project = require('../../models/Project');
 const { body, validationResult } = require('express-validator');
-const { Schema } = require('mongoose');
+
+const Project = require('../../models/Project');
 const e = require('express');
 
 router.use((req, res, next) => {
@@ -58,25 +58,39 @@ router.post(
         .save()
         .then(project => res.json(project))
         .catch(err => {
-          console.log(err);
+          console.log(err); // eslint-disable-line
         });
     });
   },
 );
 
 router.put('/:id', (req, res) => {
-  const projectId = req.params.id;
-  Project.findById(projectId, (err, project) => {
+  const { id } = req.params;
+  const { objectiveId, taskId } = req.query;
+  const { objective, task } = req.body;
+
+  Project.findById(id, (err, project) => {
     if (err) {
       return res.status(500).json(err);
     }
-    const objId = req.query.objectiveId;
-    const objective = project.objectives.id(objId);
 
-    if (!objective) {
-      project.objectives.push(req.body);
-    } else {
-      objective.set(req.body);
+    const obj = project.objectives.id(objectiveId);
+
+    if (!objectiveId && !taskId) {
+      // console.log('creating objective ...');
+      project.objectives.push(objective);
+    } else if (objectiveId && !taskId) {
+      if (objective) {
+        // console.log('updating objective ...');
+        obj.set(objective);
+      } else {
+        // console.log('creating task ...');
+        obj.tasks.push(task);
+      }
+    } else if (objectiveId && taskId) {
+      // console.log('updating task ...');
+      const tsk = obj.tasks.id(taskId);
+      tsk.set(task);
     }
 
     project
@@ -85,7 +99,7 @@ router.put('/:id', (req, res) => {
         res.json(project);
       })
       .catch(err => {
-        console.log(err);
+        console.log(err); // eslint-disable-line
       });
   });
 });
