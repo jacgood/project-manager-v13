@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const Project = require('../../models/Project');
 const { body, validationResult } = require('express-validator');
+const { Schema } = require('mongoose');
+const e = require('express');
 
 router.use((req, res, next) => {
   const token = req.headers['access-token'];
@@ -61,5 +63,31 @@ router.post(
     });
   },
 );
+
+router.put('/:id', (req, res) => {
+  const projectId = req.params.id;
+  Project.findById(projectId, (err, project) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    const objId = req.query.objectiveId;
+    const objective = project.objectives.id(objId);
+
+    if (!objective) {
+      project.objectives.push(req.body);
+    } else {
+      objective.set(req.body);
+    }
+
+    project
+      .save()
+      .then(project => {
+        res.json(project);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+});
 
 module.exports = router;

@@ -20,7 +20,40 @@ const ProjectSchema = new Schema(
     dateDue: {
       type: Date,
     },
-    objectives: [{ type: Schema.Types.ObjectId, ref: 'objective' }],
+    objectives: [
+      {
+        title: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        assignedUser: {
+          type: Schema.Types.ObjectId,
+          ref: 'user',
+        },
+        dateDue: {
+          type: Date,
+        },
+        tasks: [
+          {
+            title: {
+              type: String,
+            },
+            description: {
+              type: String,
+            },
+            assignedUser: {
+              type: Schema.Types.ObjectId,
+              ref: 'user',
+            },
+            dateDue: {
+              type: Date,
+            },
+          },
+        ],
+      },
+    ],
   },
   {
     timestamps: {
