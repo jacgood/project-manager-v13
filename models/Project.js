@@ -51,19 +51,7 @@ const ProjectSchema = new Schema(
               type: Date,
             },
           },
-          {
-            timestamps: {
-              createdAt: 'created_at',
-              updatedAt: 'updated_at',
-            },
-          },
         ],
-      },
-      {
-        timestamps: {
-          createdAt: 'created_at',
-          updatedAt: 'updated_at',
-        },
       },
     ],
   },

@@ -10,6 +10,8 @@
     "ecmaVersion": 11
   },
   "rules": {
-    "arrow-parens": ["error", "as-needed"]
+    "arrow-parens": ["error", "always"],
+    "linebreak-style": "off",
+    "consistent-return": "warn"
   }
 }

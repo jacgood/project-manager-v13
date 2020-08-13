@@ -24,7 +24,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  Project.find().then(projects => {
+  Project.find().then((projects) => {
     if (!projects) {
       return res.status(404).json({ projectNotFound: 'Projects not found' });
     }
@@ -40,7 +40,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
     }
-    Project.findOne({ title: req.body.title }).then(projects => {
+    Project.findOne({ title: req.body.title }).then((projects) => {
       if (projects) {
         return res.status(500).json({
           projectSameTitle: 'A project with that title already exists',
@@ -55,8 +55,8 @@ router.post(
       });
       newProject
         .save()
-        .then(project => res.json(project))
-        .catch(err => {
+        .then((project) => res.json(project))
+        .catch((err) => {
           console.log(err); // eslint-disable-line
         });
     });
@@ -95,10 +95,10 @@ router.put('/:id', (req, res) => {
 
     project
       .save()
-      .then(project => {
+      .then((project) => {
         res.json(project);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err); // eslint-disable-line
       });
   });
@@ -125,11 +125,11 @@ router.delete('/:id', (req, res) => {
 
     project
       .save()
-      .then(project => {
+      .then((project) => {
         res.json(project);
       })
-      .catch(err => {
-        console.log(err); // eslint-disable-line
+      .catch((err) => {
+        console.log(err);
       });
   });
 });
